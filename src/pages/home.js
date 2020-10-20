@@ -48,7 +48,7 @@ const Home = () => {
   return (
     <Stack bg={mode.colorMode === 'dark' ? 'black.500' : 'white.500'} flex={1}>
       <Flex
-        pt={[125, 100, 100]}
+        pt={[200, 125, 100, 100]}
         minH={'50vh'}
         align={'center'}
         justify={'center'}
