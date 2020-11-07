@@ -8,6 +8,7 @@ import {
   useColorMode,
   useToast,
 } from '@chakra-ui/core';
+import { useLocation, useHistory } from 'react-router-dom';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Download, GitHub} from 'react-feather';
 import {getRepos} from '../utils/github';
@@ -23,6 +24,8 @@ const Home = () => {
   const [apps, setApps] = useState([]);
   const toast = useToast();
   const mode = useColorMode();
+  const location = useLocation();
+  const history = useHistory();
 
   const getApps = useCallback(() => {
     getRepos()
@@ -44,6 +47,19 @@ const Home = () => {
   useEffect(() => {
     getApps();
   }, [getApps]);
+  
+  useEffect(() => {
+    if(location.search) {
+      let paramsString = location.search.replace('?', '');
+      paramsString.split('&').forEach(keyValString => {
+        let key = keyValString.split('=')[0];
+        let val = keyValString.split('=')[1];
+        if(key === 'page') {
+          history.push(`/${val}`);
+        }
+      });
+    }
+  }, []);
 
   return (
     <Stack bg={mode.colorMode === 'dark' ? 'black.500' : 'white.500'} flex={1}>
